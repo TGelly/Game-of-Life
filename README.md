@@ -3,3 +3,7 @@
 A game of life written in C.
 
 The display of the grid is done through the SDL lib.
+
+To compile with SDL:
+
+`gcc -o test main.c calculation/calculate.c $(sdl2-config --cflags --libs)`

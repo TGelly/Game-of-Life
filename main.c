@@ -4,14 +4,13 @@
 //?         interrogation comment
 //TODO      comment to do later
 
-#include <SDL.h>
-#include "calculation/calculate.h"
+#include "calculations/compute.h"
 
 //! Cette fonction afficheMatrice est vouée à disparaître lorsque l'affichage en SDL sera fonctionnel.
-void afficheMatrice(int** matrix, int length, int width){
+void afficheMatrice(cell** matrix, int length, int width){
     for(int i=0; i<width; i++){
         for(int j=0; j<length; j++){
-            printf("%d ", matrix[i][j]);
+            printf("%d ", matrix[i][j].value);
         }
         printf("\n");
     }
@@ -31,10 +30,10 @@ int main(){
     int length = 8, width = 8;
 
     //! Cette portion de code permet de tester la fonction update en attendant que la partie display soit fonctionnelle
-    int** matrix = allocateGrid(length, width);
-    matrix[0][2] = 1;
-    matrix[1][2] = 1;
-    matrix[2][2] = 1;
+    cell** matrix = allocateGrid(length, width);
+    matrix[1][2].value = 1;
+    matrix[2][2].value = 1;
+    matrix[3][2].value = 1;
     //on joue juste deux ticks de jeu
     afficheMatrice(matrix, length, width);
     matrix = update(matrix, length, width);
@@ -71,16 +70,26 @@ int main(){
             int run=1 ;
             SDL_Event event ;
             while(run){
-                SDL_WaitEvent(&event) ;
+                SDL_PollEvent(&event) ;
                 switch(event.type){
                     case SDL_QUIT:
                         run = 0;
                         break;
-                    case SDLK_KP_SPACE:
+                    case SDLK_SPACE:
+                        printf(" The spacebar was pressed.\n");
                         matrix = update(matrix, length, width);
                         afficheMatrice(matrix, length, width);
+                        run = 0;
+                        break;
+                    case SDLK_DOWN:
+                        printf("The down arrow key was pressed.\n");
+                        break;
+
+                    case SDL_MOUSEBUTTONDOWN:
+                        mousePress(event.button);
                         break;
                     default :
+                        break;
                 run= 1 ;
                 }
             }

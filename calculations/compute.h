@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL.h>
+//! problème avec cette ligne
+//#include <SDL_image.h>
+
+#define HEIGTH 800
+#define LENGTH 800
 
 struct cell{
     int x;      // x coordinate of the cell
@@ -15,6 +20,6 @@ cell** allocateGrid(int length, int width);
 void freeGrid(cell** grid, int length, int width);
 void passGrid(cell** grid, int length, int width, cell** newgrid);
 cell** update(cell** grid, int length, int width);
-void mousePress(SDL_MouseButtonEvent b);
+void mousePress(SDL_MouseButtonEvent b, cell** grid, int cellSize);
 
 #endif
